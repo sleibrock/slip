@@ -1,0 +1,9 @@
+zig-out/
+zig-cache/
+*.o
+*.exe
+*.swp
+\#*\#
+*.so
+*.a
+
