@@ -134,13 +134,11 @@ pub fn parse(data: *Bytes) ParseErr!DataType {
         return DataType.Symbol;
     }
 
-    if ((parse_info.numeric_only) and (parse_info.dot_detected)) {
-        return DataType.Float;
-    }
-
     if (parse_info.numeric_only) {
         if (parse_info.i_or_j_last)
             return DataType.Complex;
+        if (parse_info.dot_detected)
+            return DataType.Float;
         return DataType.Integer;
     }
 

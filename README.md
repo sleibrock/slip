@@ -1,7 +1,7 @@
-untitled lisp in zig program
+slip - steven's lisp implemented poorly
 ---
 
-(title) is a small, compact Lisp-like runtime written in Zig. It is an attempt at creating one's own language and using it for small scripting purposes using a lightweight runtime engine.
+`slip` is a small, compact Lisp-like runtime written in Zig. It is an attempt at creating one's own language and using it for small scripting purposes using a lightweight runtime engine.
 
 The goal of the runtime engine is to create a true REPL experience, and staying true to the purpose of the REPL.
 

@@ -1,13 +1,12 @@
 // Deque - generalized double-ended queue/linked list
 
 const std = @import("std");
-const mem = std.mem;
 
 const DequeErr = error{
     EmptyList,
 };
 
-pub fn init(comptime T: anytype, comptime A: mem.Allocator) type {
+pub fn init(comptime T: anytype, comptime A: std.mem.Allocator) type {
     const NodeT = struct {
         const Self = @This();
 
@@ -142,7 +141,8 @@ pub fn init(comptime T: anytype, comptime A: mem.Allocator) type {
         }
 
         /// Check if this deque is equivalent to another in value only
-        pub fn equal(S: *Self, O: *Self) bool {
+        pub fn equals(S: *Self, O: *Self) bool {
+            // TODO: implement
             _ = S;
             _ = O;
             return false;
@@ -200,7 +200,53 @@ pub fn init(comptime T: anytype, comptime A: mem.Allocator) type {
     };
 }
 
-test "Do tests work?" {}
+test "Initialization/allocation test" {
+    const Bytes = init(u8, std.heap.page_allocator);
+    var bytes1 = Bytes.init();
+    try bytes1.append(1);
+    try bytes1.append(2);
+    try bytes1.append(3);
+
+    return std.testing.expect(3 == bytes1.length);
+}
+
+
+test "Starts/ends with tests" {
+    const Bytes = init(u8, std.heap.page_allocator);
+    var bytes1 = Bytes.init();
+    try bytes1.append(1);
+    try bytes1.append(2);
+    try bytes1.append(3);
+
+    try std.testing.expect(bytes1.starts_with(1));
+    try std.testing.expect(bytes1.ends_with(3));
+
+    bytes1.clear();
+
+    try std.testing.expect(!bytes1.starts_with(1));
+    try std.testing.expect(!bytes1.ends_with(3));
+
+    try bytes1.append(5);
+    try std.testing.expect(bytes1.starts_with(5));
+    try std.testing.expect(bytes1.ends_with(5));
+}
+
+
+test "Equality testing on whole deques" {
+    const Bytes = init(u8, std.heap.page_allocator);
+    var bytes1 = Bytes.init();
+    try bytes1.append(1);
+    try bytes1.append(2);
+    try bytes1.append(3);
+
+    var bytes2 = Bytes.init();
+    try bytes2.append(4);
+    try bytes2.append(5);
+    try bytes2.append(6);
+    try bytes2.append(7);
+
+    // todo: add a.equals(b) here when impl'd
+}
 
 // end deque.zig
 
